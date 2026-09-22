@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامج الجمعية الزراعية - الرئيسية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; font-family: Tahoma, sans-serif; }
+        .sidebar { background-color: #198754; color: white; min-height: 100vh; padding: 20px; }
+        .sidebar a { color: white; text-decoration: none; display: block; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .sidebar a:hover { background-color: #157347; padding-right: 10px; transition: 0.3s; }
+        .card-box { border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background: white; padding: 20px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- القائمة الجانبية -->
+            <div class="col-md-3 sidebar">
+                <h3>🌿 الجمعية الزراعية</h3>
+                <hr>
+                <a href="/">🏠 الرئيسية (لوحة التحكم)</a>
+                <a href="/">📊 ميزان المراجعة والحسابات</a>
+                <a href="/assets_liabilities">💰 الأصول والخصوم</a>
+                <a href="/fertilizers">🌾 خدمات الأسمدة والتقاوي</a>
+                <a href="/transaction">📝 تسجيل حركة جديدة</a>
+            </div>
+
+            <!-- المحتوى الرئيسي -->
+            <div class="col-md-9 p-4">
+                <h2 class="mb-4">ميزان المراجعة والحسابات العامة</h2>
+
+                <!-- جدول الحسابات -->
+                <div class="card-box">
+                    <h4 class="mb-3 text-success">قائمة الحسابات</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>اسم الحساب</th>
+                                    <th>مدين</th>
+                                    <th>دائن</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for acc in accounts %}
+                                <tr>
+                                    <td>{{ acc.name }}</td>
+                                    <td>{{ acc.debit }}</td>
+                                    <td>{{ acc.credit }}</td>
+                                    <td>
+                                        <a href="/delete/{{ acc.id }}" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من الحذف؟')">حذف</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot class="table-light fw-bold">
+                                <tr>
+                                    <td>الإجمالي</td>
+                                    <td>{{ total_debit }}</td>
+                                    <td>{{ total_credit }}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- نموذج إضافة حساب جديد -->
+                <div class="card-box">
+                    <h4 class="mb-3 text-success">➕ إضافة حساب جديد للقائمة</h4>
+                    <form action="/add" method="POST" class="row g-3">
+                        <div class="col-md-5">
+                            <label class="form-label">اسم الحساب</label>
+                            <input type="text" class="form-control" name="account_name" required placeholder="أدخل اسم الحساب">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">مدين (جنيه)</label>
+                            <input type="number" step="0.01" class="form-control" name="debit_amount" placeholder="0.00">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">دائن (جنيه)</label>
+                            <input type="number" step="0.01" class="form-control" name="credit_amount" placeholder="0.00">
+                        </div>
+                        <div class="col-md-1 d-flex align-items-end">
+                            <button type="submit" class="btn btn-success w-100">إضافة</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

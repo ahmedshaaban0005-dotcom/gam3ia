@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأصول والخصوم - الجمعية الزراعية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; font-family: Tahoma, sans-serif; }
+        .sidebar { background-color: #198754; color: white; min-height: 100vh; padding: 20px; }
+        .sidebar a { color: white; text-decoration: none; display: block; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .sidebar a:hover { background-color: #157347; padding-right: 10px; transition: 0.3s; }
+        .card-box { border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- القائمة الجانبية -->
+            <div class="col-md-3 sidebar">
+                <h3>🌿 الجمعية الزراعية</h3>
+                <hr>
+                <a href="/">🏠 الرئيسية (لوحة التحكم)</a>
+                <a href="/">📊 ميزان المراجعة والحسابات</a>
+                <a href="/assets_liabilities">💰 الأصول والخصوم</a>
+                <a href="#">🌾 خدمات الأسمدة والتقاوي</a>
+                <a href="/transaction">📝 تسجيل حركة جديدة</a>
+            </div>
+
+            <!-- المحتوى الرئيسي -->
+            <div class="col-md-9 p-4">
+                <h2 class="mb-4">قائمة الأصول والخصوم وحقوق الملكية</h2>
+
+                <div class="row">
+                    <!-- جدول الأصول -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card card-box p-4 bg-white h-100">
+                            <h4 class="mb-3 text-success">🏢 الأصول (الموجودات)</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead class="table-success">
+                                        <tr>
+                                            <th>البيان</th>
+                                            <th>القيمة (جنيه)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in assets %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.amount }}</td>
+                                        </tr>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="2" class="text-muted">لا توجد أصول مسجلة.</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot class="table-dark">
+                                        <tr>
+                                            <th>إجمالي الأصول</th>
+                                            <th>{{ total_assets }}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- جدول الخصوم وحقوق الملكية -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card card-box p-4 bg-white h-100">
+                            <h4 class="mb-3 text-primary">📊 الخصوم وحقوق الملكية</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>البيان</th>
+                                            <th>القيمة (جنيه)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in liabilities %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.amount }}</td>
+                                        </tr>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="2" class="text-muted">لا توجد خصوم مسجلة.</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot class="table-dark">
+                                        <tr>
+                                            <th>إجمالي الخصوم وحقوق الملكية</th>
+                                            <th>{{ total_liabilities }}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
